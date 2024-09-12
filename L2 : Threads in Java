@@ -1,4 +1,4 @@
-## Threads in Java
+# Threads in Java
 
 A [Thread](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html) is an independent sequential path of execution within a program. Multiple threads can run concurrently within the same program. At runtime, threads in a program share a **common memory space** and can therefore share both data and code.
 
@@ -12,3 +12,5 @@ A [Thread](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html) is a
 
 3. **Thread States**:  
    A thread can be in different states, such as `NEW`, `RUNNABLE`, `BLOCKED`, `WAITING`, or `TERMINATED`. The transition between these states occurs based on the thread's lifecycle and its interactions with the system or other threads.
+
+
