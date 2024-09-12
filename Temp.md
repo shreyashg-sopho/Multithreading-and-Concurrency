@@ -10,7 +10,11 @@ A part of the same process running concurrently. Example :
 
 ## Context Switching
 Context Switching is the process of CPU changing context from one thread/process to another.
-Example One CPU core is running music player in one 1 CPU cycle and MS word in other cycle alternatingly. This is an example of context switching.
+Example, A single CPU core is running :
+OS thread 1 :  is running music player in one 1 CPU cycle
+OS thread 2 :  MS word in other cycle alternatingly.
+Here the OS thread 1 will have save the state of Thread 1 in some memory, then move to executing Thread 2 , read for thread 2 , then save for thread 2 and then move to thread 1 again, read for thread 1 and so on.
+This is an example of context switching.
 
 #### Context switching between two threads of same processes VS between two different processes  :
 The threads of a same process lie in the same adress space hence context switching is less expensive within the same process vs two diff process. 
