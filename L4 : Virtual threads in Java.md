@@ -23,12 +23,10 @@ But 100s of virtual threads can be ampped to one PLatform JVM thread. which corr
 
 
 
-
-
 ### Example:
 
 ```java
-Copy code
+
 Thread.startVirtualThread(() -> {
     System.out.println("Virtual Thread running");
 });
@@ -128,6 +126,19 @@ class Timepass2{
     }
 }
 ```
+In terms of creating threads, this will be faster than the CacheThreadPool and hence can submnit more tasks quickly. 
+This is what the usecase of Virtual threads is that it will help us create a large number of lightweitgh virtual threads quickly. 
+
+
+Note that the increase is only in terms of throughput not in terms of latency.
+That is a large number of threads will be created but execution time mei not much diff will be observed. 
+
+
+Since Virtual threads are relatively a new construct, hence this is still not a go thing as the industry is still figuring out the best practices yet.
+
+
+
+
 
 
 
