@@ -67,8 +67,11 @@ So this means that we can either :
 ## Why is there two ways needed ?
 This is because in Java multiple inheritance is not allowed (Can;t extend multiple classes at once), but one class can implement multiple interfaces. 
 
+## Conclusion : 
 So if we go the Extend/Mehtod Overriding way (like we did above). Thread1 class cannot do any inheritance.
 While if we go the implementing runnable interface way and passing that to the Thread way, we can still do inheritance. HENCE THIS IS A BETTER WAY AS WE HAVE LESS CONSTRAINTS IN THIS WAY. 
+
+
 
 
 
