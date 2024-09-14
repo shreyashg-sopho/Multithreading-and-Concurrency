@@ -3,7 +3,8 @@
 If multiple threads are trying to operate simultaneously on the same java object then there may be a chance of data inconsistency problem. To overcome this problem we should go for the `synchronized` keyword, then at the time only one thread is allowed to execute that method or block on the given object so that data inconsistency problem will be resolved.
 
 The main advantage of the `synchronized` keyword is we can resolve the data inconsistency problem but the main disadvantage of the `synchronized` keyword is, it increases waiting time thread and creates performance problem, hence it is not recommended to use synchronized keyword.
-if a thread wants to execute the synchronized method in the given object:
+
+If a thread wants to execute the synchronized method in the given object:
 -  it has to get a lock of that object
 -  once thread got the lock then it is allowed to execute any synchronized method on that object.
 -  once method execution completes automatically thread releases lock.
