@@ -11,12 +11,8 @@ By marking a variable as volatile, you tell the JVM:
 No Caching: The variable is not to be cached thread-locally. Every read and write to this variable will happen directly from and to the main memory.
 Visibility: When one thread modifies a volatile variable, the change is visible to all other threads immediately.
 
-### Applications of volatile:
-#### 1.Flags and States: 
-It is commonly used for variables that act as flags or states between threads. For example, a boolean flag to signal shutdown:
 
-
-##### Code : 
+#### Code : 
 ```java
 public class ResolvingIssueUsingVolatile {
     private static volatile boolean isRunning = true; // Non-volatile flag
@@ -52,9 +48,35 @@ public class ResolvingIssueUsingVolatile {
     }
 }
 ```
-### Terminal Output :
+#### Terminal Output :
 
 ```
+Value of is running in thread A is true
+Value of is running in thread A is true
+Value of is running in thread A is true
+Value of is running in thread A is true
+Value of is running in thread C is true
+Value of is running in thread E is true
+Value of is running in thread C is true
+Value of is running in thread B is true
+Value of is running in thread B is true
+Value of is running in thread F is true
+Value of is running in thread D is true
+Value of is running in thread F is true
+Value of is running in thread B is true
+Value of is running in thread F is true
+Value of is running in thread F is true
+.
+.
+.
+.
+.
+isRunning set to false.
+Value of is running in thread C is false
+Value of is running in thread F is false
+Value of is running in thread B is false
+Value of is running in thread A is false
+Value of is running in thread D is false
 ```
 
 #### Illustrations
@@ -94,3 +116,74 @@ VALUE UPDATED BY MAIN THREAD :
 
 (Everyone each time now is reading value from the Main Memory (RAM) itself).
 ```
+
+
+### Applications of volatile:
+#### 1.Flags and States: 
+It is commonly used for variables that act as flags or states between threads. For example, a boolean flag to signal shutdown. Example seen above.
+
+#### 2.Double-Checked Locking:
+Volatile is used in patterns like the Double-Checked Locking Singleton to ensure that changes to the instance variable are visible across all threads.
+```java
+
+public class Singleton {
+    private static volatile Singleton instance;
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+```
+#### 3. Non-blocking Counters: 
+Volatile is also used in non-blocking algorithms like simple counters. This can ensure that even if threads concurrently update a variable, they will read the most recent value.
+
+```java
+
+public class SomeClass {
+    private static  int count = 0; // Non-volatile flag
+
+    public static void main(String[] args) throws InterruptedException {
+        // Task is A loop that runs based on isRunning flag
+        Runnable task = () -> {
+            count++;
+            System.out.println("Increasing the count to " + count);
+        };
+        Thread threadA = new Thread(task, "A");
+        Thread threadB = new Thread(task, "B");
+        Thread threadC = new Thread(task, "C");
+        Thread threadD = new Thread(task, "D");
+        Thread threadE = new Thread(task, "E");
+        Thread threadF = new Thread(task, "F");
+        // Start child thread
+        threadA.start();
+        threadB.start();
+        threadC.start();
+        threadD.start();
+        threadE.start();
+        threadF.start();
+
+
+        System.out.println("Value of count at the end is :: " + count);
+    }
+}
+```
+### Limitations of volatile:
+#### No Atomicity: 
+Volatile does not guarantee atomicity. For instance, if multiple threads are incrementing a volatile variable, a race condition may still occur because volatile only ensures visibility, not atomicity.
+#### Only for Simple Operations:
+ It is not a replacement for synchronization in more complex operations involving multiple variables or more complex logic.
+
+
+### Conclusion :
+
+In summary, the volatile keyword ensures the visibility of changes across threads and is useful in scenarios where you need a lightweight synchronization mechanism for shared variables. However, for more complex synchronization requirements (like atomic operations or ensuring consistency across multiple variables), you need to use other mechanisms like synchronized blocks or locks.
+
+
