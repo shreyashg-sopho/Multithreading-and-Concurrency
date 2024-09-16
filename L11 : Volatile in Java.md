@@ -186,4 +186,13 @@ Volatile does not guarantee atomicity. For instance, if multiple threads are inc
 
 In summary, the volatile keyword ensures the visibility of changes across threads and is useful in scenarios where you need a lightweight synchronization mechanism for shared variables. However, for more complex synchronization requirements (like atomic operations or ensuring consistency across multiple variables), you need to use other mechanisms like synchronized blocks or locks.
 
+### Differences in Synchronization and Volatile :
+- Synchronization only ensures that that the peice of code is being executed by only a single thread at once. It could still be reading values from cache. 
+- Volatile only ensures that the value is beig read form main memory always, race conditions will still occur.
+
+
+
+
+
+
 
