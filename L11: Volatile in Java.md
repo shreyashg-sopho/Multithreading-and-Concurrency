@@ -17,6 +17,45 @@ It is commonly used for variables that act as flags or states between threads. F
 
 
 ##### Code : 
+```java
+public class ResolvingIssueUsingVolatile {
+    private static volatile boolean isRunning = true; // Non-volatile flag
+
+    public static void main(String[] args) throws InterruptedException {
+        // Task is A loop that runs based on isRunning flag
+        Runnable task = () -> {
+            while (isRunning) {
+                System.out.println("Value of is running in thread " + Thread.currentThread().getName() +" is " + isRunning);
+            }
+        };
+        Thread threadA = new Thread(task, "A");
+        Thread threadB = new Thread(task, "B");
+        Thread threadC = new Thread(task, "C");
+        Thread threadD = new Thread(task, "D");
+        Thread threadE = new Thread(task, "E");
+        Thread threadF = new Thread(task, "F");
+        // Start child thread
+        threadA.start();
+        threadB.start();
+        threadC.start();
+        threadD.start();
+        threadE.start();
+        threadF.start();
+
+        // Sleep for 10 millis
+        Thread.sleep(10);
+
+
+        isRunning = false; // But Thread B might not see this change!
+
+        System.out.println("isRunning set to false.");
+    }
+}
+```
+
+
+This time there willbe no middle caching layer to read this value from. Value will directly be read from and updated in RAM 
+
 
 
 
