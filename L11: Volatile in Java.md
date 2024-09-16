@@ -52,11 +52,45 @@ public class ResolvingIssueUsingVolatile {
     }
 }
 ```
+### Terminal Output :
+
+```
+```
+
+#### Illustrations
+```
+INITIALLY : 
+
+           -----------------------         -----------------------         -----------------------
+           |     Thread A         |       |     Thread B          |        |     Main Thread       |
+           |                      |       |                       |        |                       |
+           | CACHE (nothing)      |       |   CACHE (nothing)     |        |   CACHE (nothing)     |
+           ------------------------        ------------------------        ------------------------
+
+                       ^                                ^                                 ^
+                       |                                |                                 |
+                       |                                |                                 |
+                       |                      -----------------------                     |
+                        -------------------- |    Main Memory       |---------------------
+                                             |    int flag = true   |
+                                             ------------------------
+
+VALUE UPDATED BY MAIN THREAD : 
 
 
-This time there willbe no middle caching layer to read this value from. Value will directly be read from and updated in RAM 
+           -----------------------         -----------------------         -----------------------
+           |     Thread A         |       |     Thread B          |        |     Main Thread       |
+           |                      |       |                       |        |                       |
+           | CACHE (nothing)      |       |   CACHE (nothing)     |        |   CACHE (nothing)     |
+           ------------------------        ------------------------        ------------------------
 
+                       ^                                ^                                 ^
+                       |                                |                                 |
+                       |                                |                                 |
+                       |                      -----------------------                     |
+                        -------------------- |    Main Memory       |---------------------
+                                             |    int flag = false  |
+                                             ------------------------
 
-
-
-
+(Everyone each time now is reading value from the Main Memory (RAM) itself).
+```
