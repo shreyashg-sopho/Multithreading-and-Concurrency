@@ -142,39 +142,7 @@ public class Singleton {
 }
 
 ```
-#### 3. Non-blocking Counters: 
-Volatile is also used in non-blocking algorithms like simple counters. This can ensure that even if threads concurrently update a variable, they will read the most recent value.
 
-```java
-
-public class SomeClass {
-    private static  int count = 0; // Non-volatile flag
-
-    public static void main(String[] args) throws InterruptedException {
-        // Task is A loop that runs based on isRunning flag
-        Runnable task = () -> {
-            count++;
-            System.out.println("Increasing the count to " + count);
-        };
-        Thread threadA = new Thread(task, "A");
-        Thread threadB = new Thread(task, "B");
-        Thread threadC = new Thread(task, "C");
-        Thread threadD = new Thread(task, "D");
-        Thread threadE = new Thread(task, "E");
-        Thread threadF = new Thread(task, "F");
-        // Start child thread
-        threadA.start();
-        threadB.start();
-        threadC.start();
-        threadD.start();
-        threadE.start();
-        threadF.start();
-
-
-        System.out.println("Value of count at the end is :: " + count);
-    }
-}
-```
 ### Limitations of volatile:
 #### No Atomicity: 
 Volatile does not guarantee atomicity. For instance, if multiple threads are incrementing a volatile variable, a race condition may still occur because volatile only ensures visibility, not atomicity.
@@ -188,7 +156,7 @@ In summary, the volatile keyword ensures the visibility of changes across thread
 
 ### Differences in Synchronization and Volatile :
 - Synchronization only ensures that that the peice of code is being executed by only a single thread at once. It could still be reading values from cache. 
-- Volatile only ensures that the value is beig read form main memory always, race conditions will still occur.
+- Volatile only ensures that the value is beig read form main memory always, race conditions will still occur. volatile strictly and strictly only imporves on the `visibility` part of a variable, nothing else.
 
 
 
