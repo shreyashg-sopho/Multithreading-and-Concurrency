@@ -194,6 +194,14 @@ For simple counters and similar operations, AtomicInteger is often the best choi
 
 
 
+# Important Note :
+Know that Integer and AtomicInteger are not related. They both belong to separate packages and one is not the sub set of other. 
+Atomic Package also provides other implementations  :
+https://github.com/JetBrains/jdk8u_jdk/tree/master/src/share/classes/java/util/concurrent/atomic
+
+
+
+
 
 
 
