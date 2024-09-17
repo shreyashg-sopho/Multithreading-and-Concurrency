@@ -5,7 +5,7 @@ When you have a system where one or more threads are producing tasks (or data) a
 ###  Let's create Consumer Producer Problem : 
 
 
-#### Simple Queue
+#### Simple Queue impl
 ```java
 import java.util.*;
 public class Solution {
@@ -69,6 +69,17 @@ public class Solution {
 }
 
 ```
+#### Terminal Output : 
+```
+1726572009206 Thread-0 : Adding to the queue 1
+1726572009206 Thread-1 : Nothing to pop out yet
+1726572009206 Thread-0 : Adding to the queue 2
+1726572009206 Thread-1 : Popping an element out 1
+1726572009206 Thread-0 : Adding to the queue 3
+1726572009207 Thread-0 : Adding to the queue 4
+1726572009207 Thread-0 : No spapce left in queue
+```
+
 
 #### Explantion :
 This code works well in a single-threaded or non-concurrent environment where one operation follows another. If an element can't be added because the queue is full, it simply moves to the next operation, and if there’s nothing to remove, it prints a message and moves on.
