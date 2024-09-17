@@ -1,4 +1,22 @@
-### Threads ka state machine
+
+### States of a Thread :
+- NEW
+- RUNNABLE
+- WAITING
+- TIMED_WAITING
+- BLOCKED
+- TERMINATED
+(This can also be found in Thread.java class)
+
+
+
+
+#### Note : 
+"Running" is not actually a state as referred throughout this article, it is only mentioned to represent that the thread is currently geeting executed in CPU.
+
+
+
+### Threads ka state machine :
 ```
                 +-----------------+
                 |      NEW        |
@@ -8,8 +26,8 @@
                         |
                         v 
                  +-----------------+                                                                        
----------------->|     Runnable    | <-----------------------------------------------------------------------                                                            
-                +-----------------+                       |   (when waiting finish )                       |
+                 |     Runnable    | <----------------------------------------------------------------------                                                          
+                 +-----------------+                       |   (when waiting finish )                      |
                    ^            |                +-----------------+                                       |
                    |            |                |    Waiting      |                                       |
      Preempted or  |            |                |or timed waiting |                                       |
@@ -30,9 +48,9 @@
                                                                               +-----------------+
 
 ```            
-## Thread States and Transitions
+## Thread States and Transitions :
 
-### Thread States and Transitions Table
+### Thread States and Transitions Table :
 
 | **State**             | **Description**                                                                                                                                              | **Transition From This State**                                                                                                                       |
 |-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -43,8 +61,8 @@
 | **WAITING**           | The thread is waiting indefinitely for another thread to perform a particular action, such as `notify()` or `notifyAll()`.                                    | - If notified by another thread (`notify()`/`notifyAll()`), it returns to **RUNNABLE**.<br> - It can also be interrupted and return to **RUNNABLE**.  |
 | **TIMED_WAITING**     | The thread is waiting for a specified period, such as using `wait(n)` or `join(n)`.                                                                           | - When the specified time expires, the thread returns to **RUNNABLE**.<br> - If interrupted or notified earlier, it also returns to **RUNNABLE**.    |
 | **TERMINATED**        | The thread has completed execution.                                                                                                                           | - No further transitions; the thread’s lifecycle is complete.                                                                                        |
-
-### Thread Transitions Table
+ 
+### Thread Transitions Table :
 
 | **From State**        | **To State**        | **Condition / Action**                                                                                                                                                       |
 |-----------------------|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -59,4 +77,8 @@
 | **BLOCKED**           | **RUNNABLE**        | The thread acquires the lock it was waiting for.                                                                                                                               |
 | **WAITING**           | **RUNNABLE**        | Another thread calls `notify()`, `notifyAll()`, or the thread is interrupted.                                                                                                  |
 | **TIMED_WAITING**     | **RUNNABLE**        | The specified wait time expires, or the thread is notified or interrupted by another thread.                                                                                    |
+
+
+### Related articles :
+https://herovired.com/learning-hub/blogs/life-cycle-of-thread-in-java/#
 
