@@ -8,22 +8,22 @@
                         |
                         v 
                  +-----------------+                                                                        
----------------->|     Runnable    | <-----------------------------------------------------------------------                                                                       |
-|                +-----------------+                                                                        |
-|                   ^            |                                                                          |
-|                   |            |                                                                          |
-|  Preempted or     |            |                                                                          |
-|  thread.yielf()   |            |                                                                          |
-| or time sliced    |            |(SCHEDULED by CPU)                                                        |
-|                   |            |                                                                          |
-|                   |            |                                                                          |
-|                   |            v                                                                          |
-|                +-----------------+               +-----------------+                                      |
-|                |     Running     | ----------->  |    Terminated   |                                      |                                                                        
-|                +-----------------+               +-----------------+                                      |                                                                        
+---------------->|     Runnable    | <-----------------------------------------------------------------------                                                            
+|                +-----------------+                      |   (when waiting finish                          |
+|                   ^            |                +-----------------+                                       |
+|                   |            |                |    Waiting      |                                       |
+|     Preempted or  |            |                +-----------------+                                       |
+|     thread.yielf()|            |                         |                                                |
+|    or time sliced |            |(SCHEDULED by CPU)       |                                                |
+|                   |            |                         |                                                |
+|                   |            |                         |                                                |
+|                   |            v                         |                                                |
+|                +-----------------+-----------------------       +-----------------+                       |
+|                |     Running     | -------------------------->  |    Terminated   |                       |                                      
+|                +-----------------+       run() terminates       +-----------------+                       |                                                          
 |                        |                                                                                  |
-|                   seeking lock (synchronized method called pr reenterant lock or so                       |
-|                        |                                                                                  |                                                                                                                                                              
+|                   seeking lock (synchronized method called pr reenterant lock  or so                      |
+|                        |                                                                                  |                                                        
 |                        |                                                                                  |
 |----if obtained lock-------------------------if not obtained lock ------->  +-----------------+-------------
                                                                              |     Blocked     |
