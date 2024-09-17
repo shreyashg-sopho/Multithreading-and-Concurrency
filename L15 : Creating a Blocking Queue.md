@@ -134,6 +134,12 @@ public class Solution {
 
 ```
 
+### Conclusion : 
+We can now put threads to wait state when we are blocked on something, leeting others enter the critical section and get the job done through inter-thread communication mechanisms like notify and wait.
+
+This is something that we will now be using a lot in multithreaded environments to keep a check and control interaction between threads. 
+
+
 
 
 
