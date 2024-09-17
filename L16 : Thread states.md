@@ -78,6 +78,64 @@
 | **WAITING**           | **RUNNABLE**        | Another thread calls `notify()`, `notifyAll()`, or the thread is interrupted.                                                                                                  |
 | **TIMED_WAITING**     | **RUNNABLE**        | The specified wait time expires, or the thread is notified or interrupted by another thread.                                                                                    |
 
+### Simulation
+#### Code
+``` java
+public class SomeClass {
+    public static void main(String[] args) {
+
+        Thread t1 = new Thread ( () -> {
+            for(int i = 0; i < 50000; i++);
+            System.out.println(System.currentTimeMillis() + " About to go to sleep now");
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(System.currentTimeMillis() + " Woke up from sleep now");
+            for(int i = 0; i < 50000; i++);
+        });
+        t1.start();
+        do {
+            System.out.println(System.currentTimeMillis() + " " + t1.getState());
+        }
+        while (t1.getState()  != Thread.State.TERMINATED);
+
+    }
+
+```
+#### Terminal Output
+```
+1726596811261 RUNNABLE
+1726596811261 RUNNABLE
+1726596811261 RUNNABLE
+1726596811261 RUNNABLE
+1726596811261 RUNNABLE
+1726596811261 RUNNABLE
+1726596811261 About to go to sleep now
+1726596811261 RUNNABLE
+1726596811262 TIMED_WAITING
+1726596811262 TIMED_WAITING
+1726596811262 TIMED_WAITING
+.
+.
+.
+1726596811267 TIMED_WAITING
+1726596811267 TIMED_WAITING
+1726596811267 TIMED_WAITING
+1726596811267 RUNNABLE
+1726596811267 RUNNABLE
+1726596811268 RUNNABLE
+1726596811268 RUNNABLE
+1726596811268 RUNNABLE
+1726596811268 RUNNABLE
+1726596811268 RUNNABLE
+1726596811268 RUNNABLE
+1726596811268 RUNNABLE
+
+```
+
+
 
 ### Related articles :
 https://herovired.com/learning-hub/blogs/life-cycle-of-thread-in-java/#
