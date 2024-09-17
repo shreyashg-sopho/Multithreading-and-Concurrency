@@ -9,25 +9,25 @@
                         v 
                  +-----------------+                                                                        
 ---------------->|     Runnable    | <-----------------------------------------------------------------------                                                            
-|                +-----------------+                       |   (when waiting finish )                       |
-|                   ^            |                +-----------------+                                       |
-|                   |            |                |    Waiting      |                                       |
-|     Preempted or  |            |                |or timed waiting |                                       |
-|     thread.yielf()|            |                +-----------------+                                       |
-|    or time sliced |            |(SCHEDULED by CPU)       |                                                |
-|                   |            |                         |                                                |
-|                   |            |                         |                                                |
-|                   |            v                         |                                                |
-|                +-----------------+-----------------------       +-----------------+                       |
-|                |     Running     | -------------------------->  |    Terminated   |                       |                                      
-|                +-----------------+       run() terminates       +-----------------+                       |                                                          
-|                        |                                                                                  |
-|                   seeking lock (synchronized method called pr reenterant lock  or so                      |
-|                        |                                                                                  |                                                        
-|                        |                                                                                  |
-|----if obtained lock-------------------------if not obtained lock ------->  +-----------------+-------------
-                                                                             |     Blocked     |
-                                                                             +-----------------+
+                +-----------------+                       |   (when waiting finish )                       |
+                   ^            |                +-----------------+                                       |
+                   |            |                |    Waiting      |                                       |
+     Preempted or  |            |                |or timed waiting |                                       |
+     thread.yielf()|            |                +-----------------+                                       |
+    or time sliced |            |(SCHEDULED by CPU)       |                                                |
+                   |            |                         |                                                |
+                   |            |                         |                                                |
+                   |            v                         |                                                |
+                +-----------------+-----------------------       +-----------------+                       |
+                |     Running     | -------------------------->  |    Terminated   |                       |                                      
+                +-----------------+       run() terminates       +-----------------+                       |                                                          
+                        |                                                                                  |
+                   seeking lock (synchronized method called pr reenterant lock  or so                      |
+                        |                                                                                  |                                                        
+                        |                                                                                  |
+                        -----------------------if not obtained lock ------->  +-----------------+-----------
+                                                                              |     Blocked     |
+                                                                              +-----------------+
 
 ```            
 ## Thread States and Transitions
