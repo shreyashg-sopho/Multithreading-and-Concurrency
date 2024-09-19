@@ -108,7 +108,7 @@ public static void main(String[] args) {
 Thread "bucketFiller" is filling the bucket consistently in a second, while the "requestCreators" are requesting for a token time to time. They sometimes get it, otherwise they won't.
 
 ### Issues in the above code :
-- The above code is not `thread safe`, two threads can access the same get token function and that could lead to the same token getting by two different threads. Therefore we must take lock when one thread is executing the function get token.
+- The above code is not `thread safe`, two threads can access the same get token function and that could lead to the same token getting by two different threads. Therefore we must take lock when one thread is executing the function get token. (Explained at the end of the article)
 - Also design wise, this is not clean, the job of filling tokens constanly should be done in the TokenClass itself. 
 Here is an improved version :
 
@@ -202,7 +202,39 @@ public class TokenBucketRateLimiter {
 Never start a thread in a constructor as the child thread can attempt to use the not-yet-fully constructed object using this. This is an `anti-pattern`.
 
 **2. Why have we used the same object for locking ?** :
-To avoid race condition. Use two diff lock objects and you will see race conditions.
+To avoid `race condition`. Use two diff lock objects and you will see race conditions.
+```
+T1 - wants to addToken()
+T2 - wants to getToken()
+T3 - wants to getToken()
+curr = 2;
+
+Note : 
+1. Using two separate locks would mean one multiple threads cannot run the same method
+2. Using no locks would mean that any number of threads can run any methods. 
+The below simulation is correct for both the kinds  
+
+
+
+The below could be a possible sequence of intsructions ran by JVM : 
+
+Thread  | Instruction                                                | Thread Cache | Main Memory | 
+T1      | wants to add token                                         | curr = 2     | curr = 2    | 
+T1      | reads curr as 2.                                           | curr = 2     | curr = 2    | 
+T2      | wants to get token.                                        | curr = 2     | curr = 2    | 
+T2      | reads curr as 2                                            | curr = 2     | curr = 2    | 
+T2      | gets token and set's reduces token count                   | curr = 1     | curr = 2    | 
+T3      | wants to get token.                                        | curr = 1     | curr = 1    | 
+T3      | reads curr as 2                                            | curr = 1     | curr = 1    | 
+T3      | gets token and set's reduces token count                   | curr = 0     | curr = 0    | 
+T1      | resumes control now with the same value in it's cache      | curr = 2     | curr = 0    |
+T1      | Increments token count by 1                                | curr = 3     | curr = 0    |
+T1      | Eventually get's written to Main Memory as 3               | curr = 3     | curr = 3    |
+
+The value of curr finally should have been 1 and not 3.    
+
+```
+
 
 **3. Can we use AtomicInteger or so instead of using synchronization here ?** :
 Yes we can.
