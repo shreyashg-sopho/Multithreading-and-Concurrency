@@ -1,1 +1,7 @@
 Atomic vs Volatile : https://www.youtube.com/watch?v=31s_DzrkqZc
+
+
+General Repos : 
+https://github.com/oldratlee/fucking-java-concurrency/blob/master/src/main/java/fucking/concurrency/demo/SynchronizationOnMutableFieldDemo.java
+https://github.com/learning-zone/java-basics/blob/master/multithreading-questions.md
+
